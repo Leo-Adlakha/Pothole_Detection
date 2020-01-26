@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 options = {
     'model': "cfg/tiny-yolo-voc-1c.cfg",
     'load': 1000,
-    'threshold': 0.1
+    'threshold': 0.16
 }
 
 tfNet = TFNet(options)
