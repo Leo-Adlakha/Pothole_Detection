@@ -2,9 +2,11 @@ import cv2
 from darkflow.net.build import TFNet
 import numpy as np
 import time
+import subprocess
 
 
 def process_stream(options, camera_index):
+    subprocess.call(["afplay", "connected.wav"])
     colors = [tuple(255 * np.random.rand(3)) for i in range(10)]
     tfnet = TFNet(options)
 
@@ -17,7 +19,15 @@ def process_stream(options, camera_index):
         ret, frame = capture.read()
         results = tfnet.return_predict(frame)
         if ret and len(results) > 0:
-            print("Pothole Detected")
+            subprocess.call(["afplay", "beep.wav"])
+
+            '''
+            The below code is for having the boxes around the 
+            predicted Potholes. Now, when deployed we dont need any sort of 
+            boxes or confidence levels hence a beep is enough to tell the 
+            driver that there is a pothole ahead, hence he should drive slow.
+            '''
+
             # for color, result in zip(colors, results):
             #     top_left = (result['topleft']['x'], result['topleft']['y'])
             #     bottom_right = (result['bottomright']['x'],
